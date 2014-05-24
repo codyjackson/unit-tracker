@@ -67,15 +67,29 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
             }, boundsClone);
         }
 
-        $scope.togglePath = function(unit) {
+        function scrollVisiblePathsIntoView(units) {
+            var bounds = getVisiblePathBoundingBox(units);
+            if(bounds)
+                $scope.fitBounds(bounds);
+        }
+
+        $scope.toggleVisiblePath = function(unit) {
             if(unit.showPath)
                 $scope.addToMap(unit.path);
             else
                 $scope.removeFromMap(unit.path);
 
-            var bounds = getVisiblePathBoundingBox($scope.units);
-            if(bounds)
-                $scope.fitBounds(bounds);
+            scrollVisiblePathsIntoView($scope.units);
         };
+
+        //This will initialize the the first unit in units to show it's path.
+        //It seemed like a nice feature to have in order to show an initial path.
+        $scope.$watch('units', function(units){
+            if(!units || units.length === 0)
+                return;
+
+            units[0].showPath = true;
+            $scope.toggleVisiblePath(units[0]);
+        });
     }]);
 });
