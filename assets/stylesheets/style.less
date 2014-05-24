@@ -75,14 +75,35 @@
       list-style-type: none;
 
       li {
+        @border-radius: 2px;
+        @path-color-indicator-width: 15px;
+        .path-color-indicator {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          
+          width: @path-color-indicator-width;
+
+          background-color: red;
+
+          border-top-left-radius: @border-radius;
+          border-bottom-left-radius: @border-radius;
+
+          display: inline-block;
+          content: "•";
+        }
+        position: relative;
+
         font-family: Tahoma;
 
         margin-bottom: @legend-padding;
         padding: 2px;
+        padding-left: @path-color-indicator-width;
 
         border: 1px solid #ccc;
-        border-radius:      2px;
-        box-shadow:         1px 1px 1px 1px #EEE;
+        border-radius: @border-radius;;
+        box-shadow: 1px 1px 1px 1px #EEE;
 
         input {
           position: relative;

@@ -7,9 +7,17 @@
         <div class="units-container">
             <ul>
                 <li ng-repeat="unit in units | filter:search">
-                    <input type="checkbox" ng-model="unit.showPath" ng-change="toggleVisiblePath(unit)" ng-disabled="unit.getDistance() === 0"> 
+                    <div class="path-color-indicator" 
+                        ng-style="{'background-color': unit.getColor()}"
+                        ng-if="unit.getDistance() > 0"></div>
+                    <input type="checkbox" 
+                        ng-model="unit.showPath" 
+                        ng-change="toggleVisiblePath(unit)" 
+                        ng-disabled="unit.getDistance() === 0"> 
                     <div class="unit-details">
-                        <header>{{unit.id}} </header>
+                        <header>
+                            {{unit.id}}
+                        </header>
                         <footer>
                             Distance Traveled - {{ unit.getDistance() | number:2}} km
                         </footer>

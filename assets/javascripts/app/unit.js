@@ -13,9 +13,7 @@ define(['seedrandom', 'md5'], function(seedrandom, md5){
         var b = getRandomChannelValue(100);
 
 
-        var t = 'rgb(' + r + ',' + g + ',' + b + ')';
-        console.log(t);
-        return t;
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
     }
 
     function Unit(id, firstLocation) {
@@ -45,6 +43,10 @@ define(['seedrandom', 'md5'], function(seedrandom, md5){
             distance += latLngs[i].distanceTo(latLngs[i + 1]);
         }
         return distance / 1000;
+    };
+
+    Unit.prototype.getColor = function() {
+        return this.path.options.color;
     };
 
     return Unit;
