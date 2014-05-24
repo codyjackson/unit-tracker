@@ -1,5 +1,19 @@
 define(['angular', 'services', 'leaflet'], function(angular){
     angular.module('directives',['services']).
+    /*
+    *This directive will allow the element to be clicked on to open the user's 
+    *filebrowser as well as allow the user to drag and drop files onto the element.
+    *
+    *Attributes:
+    *   file-selected
+    *       Evaluates an expression while passing it an object that looks like:
+    *       {
+    *           $event: {
+    *               fileData: <filedata>
+    *               fileName: <filename>
+    *           }
+    *       }
+    */
     directive('filebrowser', ['$q', '$parse', '$rootScope', function($q, $parse, $rootScope){
         return {
             restrict: 'A',
@@ -53,10 +67,27 @@ define(['angular', 'services', 'leaflet'], function(angular){
             }
         };
     }]).
-    directive('map', [function(){
-        var controls = [];
+    /*
+    *This directive will inject a leaflet map with osm tiles into itself.
+    *
+    *It's a stripped down analog of leaflet's maps:
+    *http://leafletjs.com/reference.html#map-class
+    *
+    *Scope Methods:
+    *   $scope.addToMap(leafletEntity)
+    *       Adds any leaflet entity that supports <entity>.addTo(map).
+    *   $scope.removeFromMap(leafletEntity)
+    *       Removes any leaflet entity that supports map.removeLayer(<entity>).
+    */
+    directive('map', ['$q', function($q){
+        //We're using the promise so that we can defer invocations on
+        //the map object until after it's been constructed in the link
+        //function.
+        var _mapDeferred = $q.defer(); 
+        var _mapPromise = _mapDeferred.promise;
         return {
             resrict: 'A',
+            scope: true,
             link: function(scope, element, attributes, controller) {
                 var jelement = $(element);
                 var map = L.map(jelement[0]).setView([51.505, -0.09], 13);
@@ -65,30 +96,47 @@ define(['angular', 'services', 'leaflet'], function(angular){
                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-                controls.forEach(function(control){
-                    control.addTo(map);
-                });
+                _mapDeferred.resolve(map);
             },
             controller: ['$scope', function($scope){
-                this.addControl = function(leafletControl){
-                    controls.push(leafletControl);
-                };
+                $scope.addToMap = function (entity) {
+                    _mapPromise.then(function(map){
+                        entity.addTo(map);
+                    });
+                }
+
+                $scope.removeFromMap = function (entity) {
+                    _mapPromise.then(function(map){
+                        map.removeLayer(entity);
+                    });
+                }
             }]
         };
     }]).
-    directive('controlLayer', [function(){
+    /*
+    *This directive will simply inject itself into the map directive as one of
+    *it's controls. 
+    *
+    *It's a stripped down analog of leaflet's control:
+    *http://leafletjs.com/reference.html#control
+    */
+    directive('control', [function(){
         return {
             restrict: 'A',
             transclude: 'element',
             require: ['^map'],
             link: function(scope, element, attributes, controllers, transclude) {
-                var mapController = controllers[0];
+                var control = L.control();
+
                 transclude(scope, function(clone){
-                    var control = L.control();
                     control.onAdd = function(map){
                         return clone[0];
                     };
-                    mapController.addControl(control);
+                    scope.addToMap(control);
+                });
+
+                scope.$on('$destroy', function() {
+                    scope.removeFromMap(control);
                 });
             }
         };
