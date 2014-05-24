@@ -5,8 +5,7 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
         function extractUnits(jsonRoot){
             var units = {};
             var timeFrames = jsonRoot.GMIMessage.Predictions.LG_LTPByFrame.COASet.TimeFrame;
-
-            //Ignore empty time frames
+            //Remove empty timeframes
             timeFrames = timeFrames.filter(angular.isObject);
 
             function upsertUnit(rawUnit){
@@ -26,13 +25,6 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
                 units[id].addLocation(location);
             }
 
-            timeFrames.forEach(function(timeFrame){
-                if(!angular.isArray(timeFrame.Unit))
-                    return;
-
-                timeFrame.Unit.forEach(upsertUnit);
-            });
-
             function flattenToArray(units) {
                 var flatUnits = [];
                 for(var key in units) {
@@ -41,6 +33,13 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
                 return flatUnits;
             }
 
+
+            timeFrames.forEach(function(timeFrame){
+                if(!angular.isArray(timeFrame.Unit))
+                    return;
+
+                timeFrame.Unit.forEach(upsertUnit);
+            });
             return flattenToArray(units);
         }
 
