@@ -104,19 +104,19 @@ define(['angular', 'services', 'leaflet'], function(angular){
                     _mapPromise.then(function(map){
                         entity.addTo(map);
                     });
-                }
+                };
 
                 $scope.removeFromMap = function (entity) {
                     _mapPromise.then(function(map){
                         map.removeLayer(entity);
                     });
-                }
+                };
 
                 $scope.fitBounds = function(latLngBounds) {
                     _mapPromise.then(function(map){
                         map.fitBounds(latLngBounds);
                     });
-                }
+                };
             }]
         };
     }]).
