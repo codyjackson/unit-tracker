@@ -38,6 +38,7 @@ define(['angular', 'services', 'leaflet'], function(angular){
             function upsertUnit(rawUnit){
                 if(!(rawUnit.UnitID && rawUnit.Location))
                     return;
+
                 var id = rawUnit.UnitID;
                 var lat = parseFloat(rawUnit.Location.Lat.__text);
                 var lng = parseFloat(rawUnit.Location.Lon.__text);
@@ -58,7 +59,15 @@ define(['angular', 'services', 'leaflet'], function(angular){
                 timeFrame.Unit.forEach(upsertUnit);
             });
 
-            return units;
+            function flattenToArray(units) {
+                var flatUnits = [];
+                for(var key in units) {
+                    flatUnits.push(units[key]);
+                }
+                return flatUnits;
+            }
+
+            return flattenToArray(units);
         }
 
         $http.get('GMIMessageEx2.xml').then(function(response){
