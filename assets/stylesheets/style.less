@@ -1,5 +1,4 @@
-@blue: #5B83AD;
-@yellow: #FFFFE0;
+@container-padding: 10px;
 
 .entire-container {
   position: absolute;
@@ -9,9 +8,45 @@
   bottom: 0;
 }
 
-.something {
-  width: 500px;
-  height: 500px;
+.unit-legend {
+  background-color: #FFF;
+
+  position: fixed;
+  bottom: @container-padding;
+  left: @container-padding;
+
+  min-width: 200px;
+
+  padding: 4px;
+
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.65098) 0px 1px 5px 0px;
+
+  header {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+div[filebrowser]{
+  border: 3px dashed #FFF;
+
+  text-align: center;
+  padding: 50px;
+
+  h1 {
+    pointer-events: none;
+  }
+}
+
+[filebrowser].filehover {
+  border: 3px dashed #555;
+  border-radius: 20px;
 }
 
 body {
