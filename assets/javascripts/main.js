@@ -6,7 +6,8 @@ require.config({
         controllers: 'app/controllers',
         services: 'app/services',
         directives: 'app/directives',
-        leaflet: 'vendor/leaflet/leaflet'
+        leaflet: 'vendor/leaflet/leaflet',
+        xml2json: 'vendor/xml2json/xml2json'
     },
     shim: {
         'angular': {
@@ -15,18 +16,25 @@ require.config({
         },
         'angular-route': {
             deps: ['angular']
+        },
+        'xml2json': {
+            exports: 'xml2json'
         }
     },
 });
 
 require(['angular', 'angular-route', 'controllers', 'directives'], function(angular){
-    angular.module('unit-tracker', ['ngRoute', 'controllers', 'directives']).
-    config(['$routeProvider', function($routeProvider){
+    var application = angular.module('unit-tracker', ['ngRoute', 'controllers', 'directives']);
+    
+    //Configure application routes
+    application.config(['$routeProvider', function($routeProvider){
         $routeProvider.when('/', {
             templateUrl: 'partial-views/main.html',
             controller: 'MainController'
         });
     }]);
+    
+    //Bootstrap the angular application
     angular.element(document).ready(function(){
         angular.bootstrap(document, ['unit-tracker']);
     });

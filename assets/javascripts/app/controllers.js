@@ -1,6 +1,6 @@
 define(['angular', 'services'], function(angular){
-    angular.module('controllers',['services']).
-    controller('MainController', ['$scope', function($scope){
+    angular.module('controllers', ['services']).
+    controller('MainController', ['$scope', '$http', '$xmlParser', function($scope, $http, $xmlParser){
         $scope.units = [
             {
                 name: 'Ted'
@@ -9,5 +9,10 @@ define(['angular', 'services'], function(angular){
                 name: 'Jim'
             }
         ];
+
+        $http.get('GMIMessageEx2.xml').then(function(response){
+            var json = $xmlParser.parseXmlToJson(response.data);
+            console.log(json);
+        });
     }]);
 });
