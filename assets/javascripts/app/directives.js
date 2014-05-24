@@ -13,6 +13,7 @@ define(['angular', 'services', 'leaflet'], function(angular){
     *               fileName: <filename>
     *           }
     *       }
+    *   typical usage: file-selected="onFileSelected($event)"
     */
     directive('filebrowser', ['$q', '$parse', '$rootScope', function($q, $parse, $rootScope){
         return {

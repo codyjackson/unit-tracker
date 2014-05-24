@@ -1,12 +1,60 @@
 @container-padding: 10px;
 @legend-padding: 4px;
 
+body {
+  padding: 0;
+  margin: 0;
+
+  min-width: 500px;
+  min-height: 300px;
+
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
 .entire-container {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+.filebrowser-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  //This z-index is required to keep the leaflet controls behind
+  z-index: 3000;
+
+  @filebrowser-padding: 5px;
+  .filebrowser{
+    position: absolute;
+    left: @filebrowser-padding;
+    right: @filebrowser-padding;
+    top: @filebrowser-padding;
+    bottom: @filebrowser-padding;
+
+    @idle-color: #777;
+    border: 3px dashed @idle-color;
+    color: @idle-color;
+    border-radius: 10px;
+
+    text-align: center;
+    padding: 50px;
+
+    h1 {
+      margin: 0;
+      pointer-events: none;
+    }
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .filebrowser.filehover {
+    @hover-color: #444;
+    border: 3px dashed @hover-color;
+    color: @hover-color;
+  }
 }
 
 .unit-legend {
@@ -131,28 +179,3 @@
   }
 }
 
-[filebrowser]{
-  border: 3px dashed #FFF;
-
-  text-align: center;
-  padding: 50px;
-}
-
-[filebrowser].filehover {
-  border: 3px dashed #555;
-  border-radius: 20px;
-}
-
-h1 {
-  pointer-events: none;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-
-  min-width: 500px;
-  min-height: 300px;
-
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}

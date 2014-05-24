@@ -44,10 +44,10 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
             return flattenToArray(units);
         }
 
-        $http.get('GMIMessageEx2.xml').then(function(response){
-            var json = $xmlParser.parseXmlToJson(response.data);
+        $scope.onFileSelected = function($event) {
+            var json = $xmlParser.parseXmlToJson($event.fileData);
             $scope.units = extractUnits(json);
-        });
+        };
     }]).
     controller('UnitLegendController', ['$scope', function($scope){
         function getVisiblePathBoundingBox(units) {
