@@ -12,7 +12,7 @@ A small map application which tracks the paths of various units.
 3. install all other dependencies:
 
    ```
-     $ npm install
+   $ npm install
    ```
 
 ###Building:
