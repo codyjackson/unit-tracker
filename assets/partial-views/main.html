@@ -2,12 +2,18 @@
     <div control class="unit-legend" ng-controller="UnitLegendController">
         <header>Units</header>
         <div class="search-container">
-            <input type="text" ng-model="search.id" placeholder="1/1/A/1-1IN...">
+            <input type="text" ng-model="search.id" placeholder="Search for units...">
         </div>
-        <div class="scrollable">
+        <div class="units-container">
             <ul>
                 <li ng-repeat="unit in units | filter:search">
-                    <input type="checkbox" ng-model="unit.showPath" ng-change="togglePath(unit)" ng-disabled="unit.getDistance() === 0"> {{unit.id}} ({{ unit.getDistance() | number:2}} km)
+                    <input type="checkbox" ng-model="unit.showPath" ng-change="togglePath(unit)" ng-disabled="unit.getDistance() === 0"> 
+                    <div class="unit-details">
+                        <header>{{unit.id}} </header>
+                        <footer>
+                            Distance Traveled - {{ unit.getDistance() | number:2}} km
+                        </footer>
+                    </div>
                 </li>
             </ul>
         </div>
