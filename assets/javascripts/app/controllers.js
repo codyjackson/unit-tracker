@@ -1,22 +1,14 @@
 define(['angular', 'services', 'leaflet'], function(angular){
     angular.module('controllers', ['services']).
     controller('MainController', ['$scope', '$http', '$xmlParser', function($scope, $http, $xmlParser){
-        $scope.units = [
-            {
-                name: 'Ted'
-            },
-            {
-                name: 'Jim'
-            }
-        ];
 
         function Unit(id, firstLocation) {
             this.id = id;
-            this.locations = [firstLocation];
+            this.path = L.polyline([firstLocation]);
         }
 
         Unit.prototype.addLocation = function (location) {
-            this.locations.push(location);
+            this.path.addLatLng(location);
         };
 
         function extractUnits(jsonRoot){
@@ -54,8 +46,7 @@ define(['angular', 'services', 'leaflet'], function(angular){
 
         $http.get('GMIMessageEx2.xml').then(function(response){
             var json = $xmlParser.parseXmlToJson(response.data);
-            console.log(json);
-            console.log(extractUnits(json));
+            $scope.units = extractUnits(json);
         });
     }]);
 });

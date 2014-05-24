@@ -1,10 +1,12 @@
 <div class="entire-container" id="map" map>
     <div control-layer class="unit-legend">
         <header>Units</header>
-        <ul>
-            <li ng-repeat="unit in units">
-                {{unit.name}}
-            </li>
-        </ul>
+        <div class="scrollable">
+            <ul>
+                <li ng-repeat="unit in units">
+                    {{unit.id}}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
