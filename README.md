@@ -16,9 +16,9 @@ A small map application which tracks the paths of various units.
    ```
 
 ###Building:
-   ```
-   $ mimosa build -o
-   ```
+```
+$ mimosa build -o
+```
 
 ###Run Revelopment:
 ```
