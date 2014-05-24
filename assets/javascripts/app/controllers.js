@@ -45,8 +45,13 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
         }
 
         $scope.onFileSelected = function($event) {
-            var json = $xmlParser.parseXmlToJson($event.fileData);
-            $scope.units = extractUnits(json);
+            try {
+                var json = $xmlParser.parseXmlToJson($event.fileData);
+                $scope.units = extractUnits(json);
+            } catch(e) {
+                alert('We failed to parse the file you provided. Please ensure that you\'ve provided the proper format. If you have please notify us of the problem.');
+                console.log(e);
+            }
         };
     }]).
     controller('UnitLegendController', ['$scope', function($scope){
