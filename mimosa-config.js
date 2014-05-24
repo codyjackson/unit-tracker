@@ -9,7 +9,8 @@ exports.config = {
     "minify-css",
     "live-reload",
     "bower",
-    "less"
+    "less",
+    "server-template-compile"
   ],
   "server": {
     "views": {
