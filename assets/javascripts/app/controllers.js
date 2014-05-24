@@ -49,11 +49,33 @@ define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
         });
     }]).
     controller('UnitLegendController', ['$scope', function($scope){
+        function getVisiblePathBoundingBox(units) {
+            var visibleUnits = units.filter(function(unit){
+                return unit.showPath;
+            });
+
+            if(visibleUnits.length === 0)
+                return null;
+
+            var sw = visibleUnits[0].bounds.getSouthWest();
+            var ne = visibleUnits[0].bounds.getNorthEast();
+            var boundsClone = L.latLngBounds(sw, ne);
+            return visibleUnits.reduce(function(bounds, unit){
+                bounds.extend(unit.bounds.getSouthWest());
+                bounds.extend(unit.bounds.getNorthEast());
+                return bounds;
+            }, boundsClone);
+        }
+
         $scope.togglePath = function(unit) {
             if(unit.showPath)
                 $scope.addToMap(unit.path);
             else
                 $scope.removeFromMap(unit.path);
+
+            var bounds = getVisiblePathBoundingBox($scope.units);
+            if(bounds)
+                $scope.fitBounds(bounds);
         };
     }]);
 });

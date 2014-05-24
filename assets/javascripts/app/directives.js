@@ -110,6 +110,12 @@ define(['angular', 'services', 'leaflet'], function(angular){
                         map.removeLayer(entity);
                     });
                 }
+
+                $scope.fitBounds = function(latLngBounds) {
+                    _mapPromise.then(function(map){
+                        map.fitBounds(latLngBounds);
+                    });
+                }
             }]
         };
     }]).
