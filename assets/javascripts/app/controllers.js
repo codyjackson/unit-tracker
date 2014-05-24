@@ -1,4 +1,5 @@
 define(['angular', 'Unit', 'services', 'leaflet'], function(angular, Unit){
+    
     angular.module('controllers', ['services']).
     controller('MainController', ['$scope', '$http', '$xmlParser', function($scope, $http, $xmlParser){
         function extractUnits(jsonRoot){

@@ -8,7 +8,9 @@ require.config({
         directives: 'app/directives',
         Unit: 'app/unit',
         leaflet: 'vendor/leaflet/leaflet',
-        xml2json: 'vendor/xml2json/xml2json'
+        xml2json: 'vendor/xml2json/xml2json',
+        seedrandom: 'vendor/seedrandom/seedrandom',
+        md5: 'vendor/JavaScript-MD5/md5'
     },
     shim: {
         'angular': {

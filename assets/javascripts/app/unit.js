@@ -1,7 +1,29 @@
-define([], function(){
+define(['seedrandom', 'md5'], function(seedrandom, md5){
+    //A random color generator that generates colors that look
+    //decent together. Largely an implementation of the algorithm explained here:
+    //http://stackoverflow.com/questions/43044/algorithm-to-randomly-generate-an-aesthetically-pleasing-color-palette
+    function generateRandomColor(unitId) {
+        Math.seedrandom(md5(unitId));
+        function getRandomChannelValue(mix) {
+            var randomChannel = Math.random() * 256;
+            return Math.floor((randomChannel + mix) / 2);
+        }
+        var r = getRandomChannelValue(100);
+        var g = getRandomChannelValue(100);
+        var b = getRandomChannelValue(100);
+
+
+        var t = 'rgb(' + r + ',' + g + ',' + b + ')';
+        console.log(t);
+        return t;
+    }
+
     function Unit(id, firstLocation) {
         this.id = id;
-        this.path = L.polyline([firstLocation]);
+        this.path = L.polyline([firstLocation], {
+            color: generateRandomColor(id),
+            opacity: 1.0
+        });
         this.bounds = null;
     }
 
@@ -24,6 +46,6 @@ define([], function(){
         }
         return distance / 1000;
     };
-        
+
     return Unit;
 });
