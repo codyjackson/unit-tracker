@@ -9,17 +9,12 @@
   <body class="entire-container" ng-cloak ng-view>
 
 
-    {{#reload}}
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="/javascripts/reload-client.js"></script>
-    {{/reload}}
+    
 
-    {{#optimize}}
+    
       <script src="javascripts/main-built.js"></script>
-    {{/optimize}}
+    
 
-    {{^optimize}}
-      <script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/main.js"></script>
-    {{/optimize}}
+    
   </body>
 </html>

@@ -1,0 +1,36 @@
+<div class="entire-container" id="map" map>
+    <div control class="unit-legend" ng-controller="UnitLegendController">
+        <header>Units</header>
+        <div class="search-container">
+            <input type="text" ng-model="search.id" placeholder="Search for units...">
+        </div>
+        <div class="units-container">
+            <ul>
+                <li ng-repeat="unit in units | filter:search">
+                    <div class="path-color-indicator" 
+                        ng-style="{'background-color': unit.getColor()}"
+                        ng-if="unit.getDistance() > 0"></div>
+                    <input type="checkbox" 
+                        ng-model="unit.showPath" 
+                        ng-change="toggleVisiblePath(unit)" 
+                        ng-disabled="unit.getDistance() === 0"> 
+                    <div class="unit-details">
+                        <header>
+                            {{unit.id}}
+                        </header>
+                        <footer>
+                            Distance Traveled - {{ unit.getDistance() | number:2}} km
+                        </footer>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="entire-container filebrowser-container" ng-if="!units">
+    <div class="filebrowser" filebrowser file-selected="onFileSelected($event)">
+        <h1>Click to Browse</h1>
+        <h2>or</h2>
+        <h1>Drag and Drop</h1>
+    </div>
+</div>
